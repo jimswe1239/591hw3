@@ -1,0 +1,137 @@
+James Sweeney
+CS591 HW3
+
+Problem 1b:
+i.
+[[0, 1], [1, 0, 0, 0, 0], 3]
+The value 3 in the bottom left corner is a saddle point, because it is the minimum of its row, but the maximum of its column.
+This means p = [0, 1] and q = [1, 0, 0, 0, 0] and V = 3
+These results are the same as the program.
+
+ii.
+[[0.0833, 0.25, 0.3333, 0.3333], [0.3333, 0.3333, 0.25, 0.0833], 0.0833]
+
+p1 = V
+-2p1 + p2 = V
+3p1 + -2p2 + p3 = V
+-4p1 + 3p2 + -2p3 + p4 = V
+
+Solving these from the top down gives us:
+p1 = V
+-2V + 1p2 = V -> p2 = 3V
+3V + -2*3V + p3 = V -> p3 = 4V
+-4V + 3*3V + -2*4V + p4 = V -> p4 = 4V
+p1+p2+p3+p4=1
+all p are non-negative
+V+3V+4V+4V = 1
+p1 = 1/12
+p2 = 1/4
+p3 = 1/3
+p4 = 1/3
+
+q1 + -2q2 + 3q3 + -4q4 = V
+q2 + -2q3 + 3q4 = V
+q3 + -2q4 = V
+q4 = V
+
+Solving these from the bottom up gives us:
+q4 = V
+q3 + -2V = V -> q3 = 3V
+q2 + -2*3V + 3V = V -> q2 = 4V
+q1 + -2*4V + 3*3V + -4V = V -> q1 = 4V
+q1+q2+q3+q4 = 1
+all q are non-negative
+4V+4V+3V+V = 1
+q1 = 1/3
+q2 = 1/3
+q3 = 1/4
+q4 = 1/12
+
+V = 1/12
+These results are the same as the program.
+
+iii.
+[[0.25, 0.5, 0.25], [0.25, 0.5, 0.25], 1.0]
+determinant of this matrix = -16
+inverse of the matrix:
+aInv = [[ 0.8125 -0.125  -0.4375]
+ [-0.125   0.25    0.375 ]
+ [-0.4375  0.375   0.3125]]
+ 
+V = 1/sum(dot(ones, aInv)) = 1
+q = dot(aInv,ones)/sum(dot(ones, aInv))
+q = [.25, .5, .25] there are no negatives
+p = dot(onesT,aInv)/sum(dot(ones, aInv))
+p = [.25, .5, .25] there are no negatives
+These results are the same as the program.
+
+iv.
+[[1, 0, 0], [1, 0, 0], 0]
+0 2 1
+−2 0 −4
+−1 4 0
+Row 1 dominates row 2 from player 1's perspective:
+0 2 1
+−1 4 0
+Now column 3 dominates column 2 from player 2's perspective:
+0 1
+−1 0
+Now row 1 dominates row 2 from player 1's perspective:
+0 1
+Now column 1 dominates column 2 from player 2's perspective:
+0
+This means that p = [1,0,0], q = [1,0,0] and V = 0
+These results are the same as the program.
+
+v.
+[[0.1667, 0.2778, 0.5556], [0.1667, 0.2778, 0, 0.5556], 1.667]
+     y1  y2 y3 y4
+x1 [[10, 0, 7, 0, 1],
+x2 [0, 6, 4, 0, 1],
+x3 [0, 0, 3, 3, 1]
+x4 [-1, -1, -1, -1, 0]
+First pivot = 10, as the -1s on bottom are all ties and the biggest ratio beween elements in column one is 10 to 1
+After pivot:
+     x1   y2  y3  y4
+y1 [[0.1, 0, 0.7, 0, 0.1],
+x2 [0, 6, 4, 0, 1],
+x3 [0, 0, 3, 3, 1],
+   [0.1, -1, -0.3, -1, 0.1]]
+
+Next pivot = 6 as the -1s on bottom are all ties and the biggest ratio beween elements in column one is 6 to 1
+After pivot:
+     x1   x2 y3  y4
+y1 [[0.1, 0, 0.7, 0, 0.1],
+y2 [0, 1/6, 2/3, 0, 1/6],
+x3 [0, 0, 3, 3, 1],
+   [0.1, 1/6, 11/30, -1, 4/15]]
+
+Next pivot = 3 as the -1 on the bottom is the only negative, and the biggest ratio beween elements in column one is 3 to 1
+After pivot: 
+     x1   x2  y3  x3
+y1 [[0.1, 0, 0.7, 0, 0.1],
+y2 [0, 1/6, 2/3, 0, 1/6],
+y4 [0, 0, 1, 1/3, 1/3],
+   [0.1, 1/6, 41/30, 1/3, 6/10]]
+
+Since the top row has x1,x2,and x3, then p = [1/6, 5/18, 5/9]
+and since the left column as y1,y2,and y4, q = [1/6, 5/18, 0, 5/9]
+Since the bottom right has the value 6/10, and all items in the bottom row are positive, the final output will become the reciprocal, 10/6.
+These results are the same as the program.
+
+
+Problem 2a:
+Show that every symmetric game must be fair (i.e. has a value 0)
+Every symmetric game must be fair. The optimal strategy for player one, will have a matching strategy for player 2 by the definition of symmetric game, they players have the same options. Similarly, the optimal strategy for player 2 has a matching strategy for player 1.
+So, say player one uses their optimal strategy and player 2 uses a matching strategy.
+Then, sum(pi aij pj) = sum(pi -aji pj) by definition of skew-symetric matrix, ie symmetric game.
+sum(pi -aji pj) = -sum(pi aji pj)
+We also know that (p^T a p) = sum(pi aji pj) and (p^T a p) = sum(pi aij pj) therefore (p^T a p) = -(p^T a p) = 0
+This shows us that the minimum possible value for V is 0.
+If we make the same argument from the perspective of player 2, then it will show us that the maximum value for V = 0. Therefore, the value of V is 0.
+
+Problem 2b:
+If a game G = (X, Y, A) is invariant under f : X → X and g : Y → Y where
+A(x, y) = (f(x), g(y)), ∀x ∈ X, ∀y ∈ Y and f, g are 1-1 and onto, then the optimal
+strategy p and q are also invariant. I.e. f(p) = p and g(q) = q.
+The game is invariant under f and g which means that for each element of X and Y, there is a unique element that maps to it. They are 1-1 and onto, so there isn't a different mapping, therefore the strategy p will be invariant. This is because for each element in X, the corresponding x' is 1-1. The same will apply to q as well.
